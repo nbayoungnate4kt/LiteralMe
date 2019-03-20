@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
-import '../lib/Collection.js';
+import '../lib/collection.js';
 
 Template.hello.onCreated(function helloOnCreated() {
   // counter starts at 0
@@ -62,7 +62,7 @@ Template.mainBody.events({//template events define and customize user interactio
 
 });
 
-Template.addUser.events({
+Template.addbook.events({
 	'click .js-save'(event, instance) {
 		var fname = $('#exampleModal input[name="firstName"]').val()
 		var lname = $('#exampleModal input[name="lastName"]').val()

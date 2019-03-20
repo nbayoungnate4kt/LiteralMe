@@ -5,6 +5,7 @@
 <body>
 	<div class="container">
 		{{> navBar}}
+		{{> addbook}}
 		{{> mainBody}}
 		{{> footerBar}}
 	</div>
@@ -58,6 +59,7 @@
 <template name="mainBody">
 	<main role="main">
 		{{> myJumbo}}
+		
 		<div class="album py-5 bg-light">
 			<div class="container">
 				<div class="row">
@@ -73,12 +75,14 @@
 									</div>
 									<div>
 										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsup"><i class="zmdi zmdi-thumb-up"></i></button>{{Thumbsup}}
+											<button class = "js-Thumbsup"><i class="zmdi zmdi-thumb-up"></i></button>
+											<h1 class="display-4">{{Thumbsup}}</h1>
 										</div>
 									</div>
 									<div>
 										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsdown"><i class="zmdi zmdi-thumb-down"></i></button>{{Thumbsdown}}
+											<button class = "js-Thumbsdown"><i class="zmdi zmdi-thumb-down"></i></button>
+											<h1 class="display-4">{{Thumbsdown}}</h1>
 										</div>
 									</div>
 									<small class="text-muted">9 mins</small>
@@ -141,6 +145,53 @@
 		</div>
 
 	</main>
+
+</template>
+<template name = "addbook">
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  ADD A BOOK
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ADD BOOK</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <form>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                 <span class="input-group-text" id="basic-addon1">FIRST NAME</span>
+                </div>
+                  <input type="text" name="firstName" class="form-control" placeholder="....." aria-label="first name" aria-describedby="basic-addon1">
+              </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">LAST NAME</span>
+              </div>
+              <input type="text" name="lastName" class="form-control" placeholder="....." aria-label="last name" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">BOOK IMAGE</span>
+              </div>
+              <input type="text" name="photoName" class="form-control" placeholder="....." aria-label="profile image" aria-describedby="basic-addon1">
+            </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary js-saveProfile ">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <template name="footerBar">
