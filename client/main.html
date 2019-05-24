@@ -5,7 +5,6 @@
 <body>
 	<div class="container">
 		{{> navBar}}
-		{{> addbook}}
 		{{> mainBody}}
 		{{> footerBar}}
 	</div>
@@ -23,9 +22,9 @@
 					<div class="col-sm-4 offset-md-1 py-4">
 						<h4 class="text-white">You can...</h4>
 						<ul class="list-unstyled">
-							<li><a href="#" class="text-white">Follow on Twitter</a></li>
-							<li><a href="#" class="text-white">Like on Facebook</a></li>
-							<li><a href="#" class="text-white">Email us</a></li>
+							<li><a href="#" class="text-white"><i class="zmdi zmdi-twitter-box"> Follow us on Twitter</i></a></li>
+							<li><a href="#" class="text-white"><i class="zmdi zmdi-facebook-box"> Like us on Facebook</i></a></li>
+							<li><a href="#" class="text-white"><i class="zmdi zmdi-email"> Email Us</i></a></li>
 						</ul>
 					</div>
 				</div>
@@ -52,6 +51,16 @@
 			<p>
 				<a href="#" class="btn btn-primary my-2">Top Rated Book</a>
 			</p>
+			<p>
+				<button type="button" class="btn btn-light" data-toggle="modal" data-target="#adduser">
+					<div class="card mb-4 shadow-sm">
+						<img src='logo.jpg' alt="temp photo">
+							<div class="card-body">
+								<p class="card-text">ADD NEW BOOKS</p>
+							</div>
+					</div>
+				</button>
+			</p>
 		</div>
 	</section>
 </template>
@@ -59,139 +68,159 @@
 <template name="mainBody">
 	<main role="main">
 		{{> myJumbo}}
-		
 		<div class="album py-5 bg-light">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-4">
-						<div class="card mb-4 shadow-sm">
-							<img src='book1.jpg' alt="temp photo">
-							<div class="card-body">
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-								<div class="d-flex justify-content-between align-items-center">
-									<div class="btn-group">
-										<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-										<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-									</div>
-									<div>
-										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsup"><i class="zmdi zmdi-thumb-up"></i></button>
-											<h1 class="display-4">{{Thumbsup}}</h1>
+					{{#each profAll}}
+						<div id={{_id}} class="col-md-4">
+							<div class="card mb-4 shadow-sm">
+								<img class="image" src={{bookCover}}>
+								<div class="card-body">
+									<p class="card-text">{{bookTitle}}</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="btn-group">
+											<button type="button" class="btn btn-sm btn-outline-secondary js-showbook"><i class="zmdi zmdi-eye"></i>View</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editbook{{_id}}"><i class="zmdi zmdi-edit"></i>Edit</button>
 										</div>
-									</div>
-									<div>
-										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsdown"><i class="zmdi zmdi-thumb-down"></i></button>
-											<h1 class="display-4">{{Thumbsdown}}</h1>
+										<div class="btn-group">
+											<button type="button" class="btn btn-sm btn btn-outline-success js-thumbsup"><i class="zmdi zmdi-thumb-up"></i> {{Likes}}</button>
+											<button type="button" class="btn btn-sm btn btn-outline-danger js-thumbsdown"><i class="zmdi zmdi-thumb-down"></i> {{Dislikes}}</button>
 										</div>
+										<small class="text-muted">by {{authorName}}</small>
 									</div>
-									<small class="text-muted">9 mins</small>
 								</div>
 							</div>
-						</div>
-					</div> <!-- /col -->
-					<div class="col-md-4">
-						<div class="card mb-4 shadow-sm">
-							<img src='book2.jpg' alt="temp photo">
-							<div class="card-body">
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-								<div class="d-flex justify-content-between align-items-center">
-									<div class="btn-group">
-										<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-										<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-									</div>
-									<div>
-										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsup"><i class="zmdi zmdi-thumb-up"></i></button>{{Thumbsup}}
+
+							<div class="modal fade" id="viewinfo{{_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">{{bookTitle}}</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="row">
+												<div class="col">
+													<img class="editimage" src={{bookCover}}>
+												</div>
+												<div class="col">
+													Author : {{authorName}}<br>
+													Views : {{Views}}<br>													
+													Description : {{desc}}<br>									
+												</div>
+											</div>
+
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<!-- <button type="button" data-dismiss="modal" class="btn btn-primary js-delete">Delete</button> -->
 										</div>
 									</div>
-									<div>
-										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsdown"><i class="zmdi zmdi-thumb-down"></i></button>{{Thumbsdown}}
-										</div>
-									</div>
-									<small class="text-muted">9 mins</small>
 								</div>
 							</div>
-						</div>
-					</div> <!-- /col -->
-					<div class="col-md-4">
-						<div class="card mb-4 shadow-sm">
-							<img src='book3.jpg' alt="temp photo">
-							<div class="card-body">
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-								<div class="d-flex justify-content-between align-items-center">
-									<div class="btn-group">
-										<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-										<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-									</div>
-									<div>
-										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsup"><i class="zmdi zmdi-thumb-up"></i></button>{{Thumbsup}}
+						
+							<div class="modal fade" id="editbook{{_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Edit {{bookTitle}}'s Details</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form>
+
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-default">Book Title :</span>
+													</div>
+													<input type="text" id="bookTitle" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+												</div>
+
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-default">Writer Name :</span>
+													</div>
+													<input type="text" id="authorName" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+												</div>
+
+												<div class="input-group mb-3">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-default">Book Cover :</span>
+													</div>
+													<input type="text" id="bookCover" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+												</div>
+
+												<div class="form-group">
+													<label for="description" class="col-form-label">Description :</label>
+													<textarea class="form-control" id="description"></textarea>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary js-savebook">Save</button>
+											<button type="button" class="btn btn-primary js-delete">Delete</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 										</div>
 									</div>
-									<div>
-										<div class="col-sm-4 text-center">
-											<button class = "js-Thumbsdown"><i class="zmdi zmdi-thumb-down"></i></button>{{Thumbsdown}}
-										</div>
-									</div>
-									<small class="text-muted">9 mins</small>
 								</div>
 							</div>
-						</div>
-					</div> <!-- /col -->
-				</div> <!-- /row for all cards -->
+						</div> 
+					{{/each}}			
+				</div> 
 			</div>
 		</div>
-
 	</main>
 
-</template>
-<template name = "addbook">
-  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  ADD A BOOK
-</button>
+	<div class="modal fade" id="adduser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Add a new book</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">ADD BOOK</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <form>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                 <span class="input-group-text" id="basic-addon1">FIRST NAME</span>
-                </div>
-                  <input type="text" name="firstName" class="form-control" placeholder="....." aria-label="first name" aria-describedby="basic-addon1">
-              </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">LAST NAME</span>
-              </div>
-              <input type="text" name="lastName" class="form-control" placeholder="....." aria-label="last name" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">BOOK IMAGE</span>
-              </div>
-              <input type="text" name="photoName" class="form-control" placeholder="....." aria-label="profile image" aria-describedby="basic-addon1">
-            </div>
-      </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary js-saveProfile ">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroup-sizing-default">Book Title :</span>
+							</div>
+							<input type="text" id="bookTitle" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroup-sizing-default">Writer Name :</span>
+							</div>
+							<input type="text" id="authorName" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroup-sizing-default">Book Cover Image :</span>
+							</div>
+							<input type="text" id="bookCover" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+						</div>
+
+						<div class="form-group">
+							<label for="description" class="col-form-label">Description :</label>
+							<textarea class="form-control" id="description"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary js-addbook">Add book</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="footerBar">
